@@ -142,11 +142,26 @@ export default new Vuex.Store({
         });
       }
     },
-    async removeWishlist(context, id) {
+    async removeWishlist({ dispatch }, id) {
       try {
-        
+        await wishlistApi.delete(`/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        dispatch("fetchWishlist");
+
+        Swal.fire({
+          icon: "success",
+          title: "Removed from Your Wishlist",
+        });
       } catch (error) {
-        
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
       }
     },
     initMarker({ commit }, loc) {

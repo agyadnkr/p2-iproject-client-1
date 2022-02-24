@@ -1,5 +1,8 @@
 <template>
-  <div class="h-96 w-full px-2 py-2">
+  <button
+    @click.prevent="$router.push(`/restaurants/${wishlist.id}`)"
+    class="h-96 w-full px-2 py-2"
+  >
     <div class="h-full w-full rounded-xl flex flex-col shadow-lg">
       <div class="h-3/4">
         <img
@@ -16,7 +19,7 @@
             {{ wishlist.name }}
           </p>
           <button
-          @click="removeButton"
+            @click="removeButton"
             class="h-8 w-36 px-4 text-sm text-center text-white hover:text-slate-900 bg-red-600 hover:bg-red-400 rounded-lg"
             style="font-family: 'Encode Sans', sans-serif; font-weight: 600"
           >
@@ -27,18 +30,20 @@
         <div></div>
       </div>
     </div>
-  </div>
+  </button>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "WishlistCard",
   props: ["wishlist"],
   methods: {
+    ...mapActions(["removeWishlist"]),
     removeButton() {
-      
-    }
-  }
+      this.removeWishlist(this.wishlist.Wishlist.id);
+    },
+  },
 };
 </script>
 
