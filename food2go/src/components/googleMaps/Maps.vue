@@ -27,10 +27,10 @@ export default {
       options: {
         fullscreenControl: false,
       },
-      center: {
-        lat: -7.759722999999999,
-        lng: 110.3989719,
-      },
+      // center: {
+      //   lat: -7.759722999999999,
+      //   lng: 110.3989719,
+      // },
     };
   },
   mounted() {
@@ -53,7 +53,15 @@ export default {
     },
   },
   computed: {
-    ...mapState(["center", "locationMarkers", "locPlaces", "existingPlace"]),
+    ...mapState(["locationMarkers", "locPlaces", "existingPlace"]),
+    center: {
+      get() {
+        return this.$store.state.center;
+      },
+      set(value) {
+        this.SET_CENTER(value)
+      }
+    }
   },
 };
 </script>

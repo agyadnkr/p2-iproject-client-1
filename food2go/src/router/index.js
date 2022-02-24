@@ -23,6 +23,38 @@ const routes = [
     component: () => import("../views/Register.vue"),
   },
   {
+    path: "/restaurants",
+    name: "RestaurantList",
+    component: () => import("../views/RestaurantList"),
+  },
+  {
+    path: "/wishlists",
+    name: "Wishlist",
+    component: () => import("../views/Wishlist"),
+    beforeEnter: (to, from, next) => {
+      if (
+        !localStorage.getItem("access_token") ||
+        localStorage.getItem("userRole") !== "Customer"
+      ) {
+        next("/");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("access_token")) {
+        next("/");
+      } else {
+        next();
+      }
+    },
+    component: () => import("../views/Register.vue"),
+  },
+  {
     path: "/login",
     name: "Login",
     beforeEnter: (to, from, next) => {
@@ -38,7 +70,10 @@ const routes = [
     path: "/restaurants/add",
     name: "AddRestaurant",
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem("userRole") != "Owner") {
+      if (
+        !localStorage.getItem("access_token") ||
+        localStorage.getItem("userRole") != "Owner"
+      ) {
         next("/");
       } else {
         next();

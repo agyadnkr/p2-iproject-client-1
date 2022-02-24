@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { mainApi, restaurantApi } from "../apis";
+import { mainApi, restaurantApi, wishlistApi } from "../apis";
 // import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -105,6 +105,31 @@ export default new Vuex.Store({
         });
 
         return true;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+    },
+    async addToWishlist({ dispatch }, id) {
+      try {
+        await wishlistApi.post(
+          `/${id}`,
+          {},
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Added to Your Wishlist",
+        });
+
+        dispatch("fetchLocations");
       } catch (error) {
         Swal.fire({
           icon: "error",
