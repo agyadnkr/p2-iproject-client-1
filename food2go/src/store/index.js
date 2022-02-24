@@ -18,6 +18,7 @@ export default new Vuex.Store({
     restaurantDetail: {},
     reviewData: [],
     imageData: [],
+    wishlistData: [],
     center: {
       lat: -7.759722999999999,
       lng: 115.3989719,
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     },
     FETCH_IMAGEDATA(state, payload) {
       state.imageData = payload;
+    },
+    FETCH_WISHLISTDATA(state, payload) {
+      state.wishlistData = payload;
     },
     ADD_LOCATION_MARKER(state, payload) {
       state.locationMarkers.push({ position: payload });
@@ -138,8 +142,31 @@ export default new Vuex.Store({
         });
       }
     },
+    async removeWishlist(context, id) {
+      try {
+        
+      } catch (error) {
+        
+      }
+    },
     initMarker({ commit }, loc) {
       commit("SET_EXISTINGPLACE", loc);
+    },
+    async fetchWishlist({ commit }) {
+      try {
+        const response = await wishlistApi.get("/", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        commit("FETCH_WISHLISTDATA", response.data.Restaurants);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
     },
     async fetchLocations({ commit }) {
       try {

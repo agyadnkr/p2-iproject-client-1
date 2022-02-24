@@ -11,18 +11,6 @@ const routes = [
     component: Home,
   },
   {
-    path: "/register",
-    name: "Register",
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem("access_token")) {
-        next("/");
-      } else {
-        next();
-      }
-    },
-    component: () => import("../views/Register.vue"),
-  },
-  {
     path: "/restaurants",
     name: "RestaurantList",
     component: () => import("../views/RestaurantList"),
