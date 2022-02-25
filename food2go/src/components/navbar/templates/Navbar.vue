@@ -1,9 +1,9 @@
 <template>
-  <div class="h-20 w-full">
+  <div :class="navbarColor">
     <div class="w-full h-full flex flex-row justify-between px-72">
       <div class="w-1/6 flex justify-start items-center">
         <router-link
-          class="text-3xl text-slate-900"
+          class="text-3xl text-slate-900 border-0"
           style="font-family: 'Encode Sans', sans-serif; font-weight: 700"
           to="/"
           >Food 2 Go</router-link
@@ -51,7 +51,7 @@
 import { mapState } from "vuex";
 import HomeDropdown from "../organisms/HomeDropdown.vue";
 import ProfileDropdown from "../organisms/ProfileDropdown.vue";
-export default {
+export default { 
   name: "Navbar",
   components: {
     HomeDropdown,
@@ -59,6 +59,13 @@ export default {
   },
   computed: {
     ...mapState(["isLogged", "currentUser"]),
+    navbarColor() {
+      if (this.$route.name === "RestaurantList") {
+        return "h-20 w-full bg-white"
+      } else {
+        return "h-20 w-full"
+      }
+    }
   },
 };
 </script>
