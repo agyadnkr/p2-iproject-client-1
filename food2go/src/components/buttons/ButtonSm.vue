@@ -1,10 +1,10 @@
 <template>
   <button
     v-on="$listeners"
-    class="w-1/2 h-16 px-12 bg-red-600 text-2xl font-bold text-white rounded-full overflow-y-hidden"
+    class="w-15/24 self-center h-12 px-12 bg-red-600 text-lg text-white rounded-lg overflow-y-hidden"
   >
     <lottie-player
-      class="object-contain h-28 -my-3"
+      class="object-contain h-28 -my-6"
       v-if="isLoading"
       src="https://assets9.lottiefiles.com/packages/lf20_szlepvdh.json"
       background="transparent"
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "ButtonMd",
+  name: "ButtonSm",
   props: ["text", "isLoading"],
 };
 </script>

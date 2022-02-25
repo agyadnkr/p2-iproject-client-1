@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { mainApi, restaurantApi, wishlistApi } from "../apis";
+import { mainApi, restaurantApi, reviewApi, wishlistApi } from "../apis";
 // import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -164,6 +164,42 @@ export default new Vuex.Store({
         });
       }
     },
+    async reviewSubmitHandler({ dispatch }, payload) {
+      try {
+        const fd = new FormData();
+        fd.append("review", payload.comment);
+        fd.append("rating", payload.rating);
+
+        for (let i = 0; i < payload.selectedFiles.length; i++) {
+          fd.append(
+            "images",
+            payload.selectedFiles[i],
+            payload.selectedFiles[i].name
+          );
+        }
+        console.log(payload.restaurantId);
+
+        await reviewApi.post(`/${payload.restaurantId}`, fd, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        dispatch("fetchReview", payload.restaurantId);
+
+        Swal.fire({
+          icon: "success",
+          title: "Comment posted!",
+        });
+        return true;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+    },
     initMarker({ commit }, loc) {
       commit("SET_EXISTINGPLACE", loc);
     },
@@ -175,6 +211,32 @@ export default new Vuex.Store({
           },
         });
         commit("FETCH_WISHLISTDATA", response.data.Restaurants);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+    },
+    async fetchImages({ commit }, id) {
+      try {
+        const response = await mainApi.get(`/images/${id}`);
+
+        commit("FETCH_IMAGEDATA", response.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+    },
+    async fetchReview({ commit }, id) {
+      try {
+        const response = await reviewApi.get(`/${id}`);
+
+        commit("FETCH_REVIEWDATA", response.data);
       } catch (error) {
         Swal.fire({
           icon: "error",

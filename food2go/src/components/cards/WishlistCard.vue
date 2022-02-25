@@ -1,15 +1,15 @@
 <template>
-  <button
-    @click.prevent="$router.push(`/restaurants/${wishlist.id}`)"
-    class="h-96 w-full px-2 py-2"
-  >
+  <div class="h-96 w-full px-2 py-2">
     <div class="h-full w-full rounded-xl flex flex-col shadow-lg">
-      <div class="h-3/4">
+      <button
+        class="h-3/4"
+        @click.prevent="$router.push(`/restaurants/${wishlist.id}`)"
+      >
         <img
           src="https://ik.imagekit.io/iqpgx3omg7kg/restaurant/Screenshot__1__LJRYXqZU_.png"
           class="object-cover h-full w-full rounded-xl"
         />
-      </div>
+      </button>
       <div class="h-1/4 flex flex-row">
         <div class="flex flex-col text-left text-slate-900 pl-4 pt-2 gap-y-4">
           <p
@@ -30,7 +30,7 @@
         <div></div>
       </div>
     </div>
-  </button>
+  </div>
 </template>
 
 <script>
