@@ -219,6 +219,19 @@ export default new Vuex.Store({
         });
       }
     },
+    async fetchImages({ commit }, id) {
+      try {
+        const response = await mainApi.get(`/images/${id}`);
+
+        commit("FETCH_IMAGEDATA", response.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+    },
     async fetchReview({ commit }, id) {
       try {
         const response = await reviewApi.get(`/${id}`);

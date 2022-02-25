@@ -30,6 +30,9 @@
       <!-- Comment Section -->
       <CommentSection v-if="currentPage === 'review'"></CommentSection>
 
+      <!-- Photo Section -->
+      <PhotoSection v-if="currentPage === 'photos'"></PhotoSection>
+
       <!-- Detail Section -->
       <div class="h-auto mt-4 bg-blue-600 flex flex-row">
         <div class="w-1/2 h-120 bg-slate-400"></div>
@@ -41,10 +44,12 @@
 
 <script>
 import CommentSection from "../components/restaurantDetail/template/CommentSection.vue";
+import PhotoSection from "../components/restaurantDetail/template/PhotoSection.vue";
 export default {
   name: "RestaurantDetail",
   components: {
     CommentSection,
+    PhotoSection
   },
   data() {
     return {

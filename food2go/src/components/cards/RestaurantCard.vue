@@ -80,7 +80,7 @@ export default {
     ...mapState(["center", "isLogged", "currentUser"]),
     rating() {
       if (this.location.avgRating) {
-        return `${this.location.avgRating}/5`;
+        return `${this.location.avgRating[0]}/5`;
       } else {
         return "";
       }
